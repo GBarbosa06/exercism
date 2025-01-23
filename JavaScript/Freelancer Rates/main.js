@@ -40,3 +40,5 @@ export function dayRate(ratePerHour) {
     total += (restOfDays*dayRatef);
     return Math.ceil(total);  
   }
+
+  //nesse caso usei um laço for, porém por ser um desconto não acumulável, também dá pra completar fazendo uma aplicação de desconto simples, o que usaria menos memória, mas essa foi minha primeira resolução
