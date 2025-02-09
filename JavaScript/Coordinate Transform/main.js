@@ -53,12 +53,13 @@ export function translate2d(dx, dy) {
     const lastCall = [];
     let lastResult;
   
-    return (x, y) => { if(lastResult && lastCall[0] == x && lastCall[1] == y) {return lastResult}
-                        lastCall[0] = x;
-                       lastCall[1] = y;
-                       lastResult = f(x,y);
-  
-                       return lastResult;
-                     }
+    return (x, y) => { 
+      if(lastResult && lastCall[0] == x && lastCall[1] == y) {return lastResult}
+      lastCall[0] = x;
+      lastCall[1] = y;
+      lastResult = f(x,y);
+
+      return lastResult;
+    }
   }
   
