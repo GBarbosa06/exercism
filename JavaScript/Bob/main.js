@@ -1,17 +1,24 @@
+const isMessageQuestion = (message) => message.endsWith("?");
+const isMessageUpperCase = (message) =>
+  !/[a-z]/.test(message) && /[A-Z]/.test(message);
+const isMessageBlank = (message) => message === "";
+
+
 export const hey = (message) => {
-    let arrayMessage = message.split("")
-    if (arrayMessage[message.length-1] === '?') {
-      return 'Sure.';
-    }
-    if (arrayMessage.every(char => char === char.toUpperCase())) {
-      if (arrayMessage[message.length-1] !== '?') {
-        return 'Whoa, chill out!'
-      }
-      else {
-        return "Calm down, I know what I'm doing!"
-      }
-    }
-    
-    return 'Whatever.'
-  };
+  const messageTrim = message.trim();
+  if (isMessageQuestion(messageTrim) && isMessageUpperCase(messageTrim)) {
+    return "Calm down, I know what I'm doing!";
+  }
+  if (isMessageQuestion(messageTrim)) {
+    return "Sure.";
+  }
+  if (isMessageBlank(messageTrim)) {
+    return "Fine. Be that way!";
+  }
+  if (isMessageUpperCase(messageTrim)) {
+    return "Whoa, chill out!";
+  }
   
+  return "Whatever.";
+  
+};
