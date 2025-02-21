@@ -4,35 +4,51 @@ const discount = {
   3: 0.1,
   4: 0.2,
   5: 0.25
+};
+
+const BOOK_PRICE = 800; 
+
+function calcGroupCost(size) {
+  return size * BOOK_PRICE * (1 - discount[size]);
 }
 
-//param: array
-function calcGroupCost(group) {
-  let cost = 0;
-  let uniqueBooks = group.filter(book => book !== 0).length
-  cost = 800 * uniqueBooks;
-  cost *= (1-discount[uniqueBooks])
-  return cost;
+function findMinCost(basket, memo = {}) {
+  const key = basket.join(","); 
+  if (memo[key] !== undefined) return memo[key]; 
+  if (basket.every(count => count === 0)) return 0; 
+  let minCost = Infinity;
+
+  for (let size = 5; size >= 1; size--) {
+    const group = [];
+
+    for (let i = 0; i < basket.length && group.length < size; i++) {
+      if (basket[i] > 0) {
+        group.push(i);
+      }
+    }
+
+    if (group.length === size) {
+      const newBasket = [...basket];
+      for (let index of group) {
+        newBasket[index]--;
+      }
+
+      minCost = Math.min(
+        minCost, calcGroupCost(size) + findMinCost(newBasket, memo)
+      );
+    }
+  }
+
+  memo[key] = minCost;
+  return minCost;
 }
 
-export const cost = (books) => {
+export function cost(books) {
   const basket = [0, 0, 0, 0, 0];
-  let group = [0, 0, 0, 0, 0];
-  let costCounter = 0;
+  
   for (let book of books) {
     basket[book - 1]++;
   }
-  while (basket.some(book => book !== 0)) {
-    group = [0, 0, 0, 0, 0]
-    for (let i = 0; i < 5; i++) {
-      if (basket[i] !== 0) {
-        group[i]++;
-        basket[i]--;
-        
-      }
-    }
-    costCounter += calcGroupCost(group);
-    
-  }
-  return costCounter;
-};
+
+  return findMinCost(basket);
+}
