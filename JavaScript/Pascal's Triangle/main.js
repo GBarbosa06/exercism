@@ -1,4 +1,4 @@
-export const generatePascalsTriangle = (rows) => {
+/* export */ const generatePascalsTriangle = (rows) => {
     let triangle = [];
     
     for (let i = 0; i < rows; i++) {
@@ -25,8 +25,6 @@ function printPascalsTriangle(rows) {
     for (let row of triangle) {
         let linha = row.join(' ')
         console.log(linha);
-
-
     }
 }
 
