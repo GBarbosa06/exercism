@@ -1,4 +1,3 @@
-/// <reference path="./global.d.ts" />
 // @ts-check
 
 /**
@@ -61,7 +60,7 @@ export function createScoreBoard() {
     return scoreBoard;
   }
   
-  /**
+  /*
    * Normalizes a score with the provided normalization function.
    *
    * @param {Params} params the parameters for performing the normalization
